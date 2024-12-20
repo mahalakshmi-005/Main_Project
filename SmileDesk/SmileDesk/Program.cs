@@ -1,7 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using SmileDesk.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<ApplicationDbContext>(OptionsBuilderConfigurationExtensions =>
+{
+    string connectionString = builder.Configuration.GetConnectionString("SmileDesk");
+    OptionsBuilderConfigurationExtensions.UseSqlServer(connectionString);
+});
 
 var app = builder.Build();
 
